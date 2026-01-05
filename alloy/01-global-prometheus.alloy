@@ -1,0 +1,22 @@
+// 01-global-prometheus.alloy
+
+prometheus.remote_write "grafana_cloud" {
+  endpoint {
+    url = "https://prometheus-prod-13-prod-us-east-0.grafana.net/api/prom/push"
+    basic_auth {
+      username = "<username>"
+      // Use the API Key you provided
+      password = sys.env("GCLOUD_RW_API_KEY")
+    }
+  }
+}
+
+// Update your relabeler to forward to the Cloud destination
+prometheus.relabel "common_labels" {
+  forward_to = [prometheus.remote_write.grafana_cloud.receiver]
+
+  rule {
+    target_label = "env"
+    replacement  = "production"
+  }
+}

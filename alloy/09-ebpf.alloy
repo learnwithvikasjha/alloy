@@ -1,0 +1,19 @@
+// 09-ebpf.alloy
+
+beyla.ebpf "tg_otp" {
+	discovery {
+		instrument {
+			open_ports = "8002"
+      name       = "tg_otp"
+		}
+	}
+
+	ebpf {
+		heuristic_sql_detect = true
+	}
+
+	output {
+		traces = [otelcol.exporter.otlp.grafana_cloud.input]
+	}
+}
+

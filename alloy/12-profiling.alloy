@@ -1,0 +1,9 @@
+// 1. Automatically find all processes running on this Linux host
+discovery.process "all_linux_processes" {
+}
+
+// 2. Use eBPF to profile those discovered processes
+pyroscope.ebpf "all_jobs" {
+  forward_to = [pyroscope.write.production_backend.receiver]
+  targets    = discovery.process.all_linux_processes.targets
+}

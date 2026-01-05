@@ -1,0 +1,20 @@
+// 15-github.alloy
+
+prometheus.exporter.github "my_github_stats" {
+  api_token = sys.env("GITHUB_TOKEN")
+  repositories   = ["learnwithvikasjha/tba-docs","learnwithvikasjha/gobotify"]
+
+}
+
+discovery.relabel "github_relabel" {
+  targets = prometheus.exporter.github.my_github_stats.targets
+  rule {
+    target_label = "job"
+    replacement  = "integrations/github"
+  }
+}
+
+prometheus.scrape "github_scrape" {
+  targets    = discovery.relabel.github_relabel.output
+  forward_to = [prometheus.relabel.common_labels.receiver]
+}

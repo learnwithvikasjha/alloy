@@ -1,0 +1,12 @@
+local.file_match "system_logs" {
+    path_targets = [
+        { "__path__" = "/var/log/syslog", "job" = "system", "instance" = constants.hostname },
+        { "__path__" = "/var/log/auth.log", "job" = "auth", "instance" = constants.hostname },
+        { "__path__" = "/var/log/kern.log", "job" = "kernel", "instance" = constants.hostname },
+    ]
+}
+
+loki.source.file "system_logs_source" {
+    targets    = local.file_match.system_logs.targets
+    forward_to = [loki.write.grafana_cloud_loki.receiver]
+}

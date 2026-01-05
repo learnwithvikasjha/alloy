@@ -1,0 +1,28 @@
+// 1. Discover all processes on the host
+discovery.process "local_processes" {
+}
+
+// 2. Filter for only our python script
+discovery.relabel "filter_gobotify" {
+  targets = discovery.process.local_processes.targets
+
+  // Look at the command line of the process
+  rule {
+    source_labels = ["__meta_process_commandline"]
+    regex         = ".*gobotify.*"
+    action        = "keep"
+  }
+
+  // Make the name look clean in Grafana
+  rule {
+    action       = "replace"
+    target_label = "service_name"
+    replacement  = "gobotify-app"
+  }
+}
+
+// 3. Attach eBPF to the filtered process
+pyroscope.ebpf "gobotify_monitor" {
+  forward_to = [pyroscope.write.production_backend.receiver]
+  targets    = discovery.relabel.filter_gobotify.output
+}

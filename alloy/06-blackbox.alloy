@@ -1,0 +1,22 @@
+prometheus.exporter.blackbox "local" {
+  config = "{ modules: { http_2xx: { prober: http, timeout: 5s } } }"
+
+  target {
+    name    = "techbloomeracademy"
+    address = "https://techbloomeracademy.com"
+    module  = "http_2xx"
+  }
+
+  target {
+    name    = "gobotify"
+    address = "https://gobotify.com"
+    module  = "http_2xx"
+  }
+}
+
+// Configure a prometheus.scrape component to collect blackbox metrics.
+prometheus.scrape "demo" {
+  targets    = prometheus.exporter.blackbox.local.targets
+  forward_to = [prometheus.relabel.common_labels.receiver]
+}
+

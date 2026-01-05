@@ -1,0 +1,21 @@
+livedebugging {
+  enabled = true
+}
+
+// 01-global-remotecfg.alloy
+
+remotecfg {
+  url = "https://fleet-management-prod-008.grafana.net"
+  id  = constants.hostname
+
+  attributes = {
+    "os"       = "linux",
+    "env"      = "production",
+    "hostname" = constants.hostname,
+  }
+
+  basic_auth {
+    username = "<username>"
+    password = sys.env("GCLOUD_RW_API_KEY")
+  }
+}

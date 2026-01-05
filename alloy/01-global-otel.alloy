@@ -1,0 +1,13 @@
+// 01-global-otel.alloy
+
+otelcol.auth.basic "grafana_cloud" {
+  username = "<username>"
+  password = sys.env("GCLOUD_RW_API_KEY")
+}
+
+otelcol.exporter.otlp "grafana_cloud" {
+  client {
+    endpoint = "tempo-prod-04-prod-us-east-0.grafana.net:443"
+    auth     = otelcol.auth.basic.grafana_cloud.handler
+  }
+}

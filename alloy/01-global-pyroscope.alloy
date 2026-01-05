@@ -1,0 +1,11 @@
+// 01-global-pyroscope.alloy
+
+pyroscope.write "production_backend" {
+  endpoint {
+    url = "https://profiles-prod-001.grafana.net"
+    basic_auth {
+      username = "<username>"
+      password = env("GCLOUD_RW_API_KEY")
+    }
+  }
+}

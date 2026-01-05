@@ -1,0 +1,13 @@
+prometheus.exporter.cadvisor "local" {
+  docker_host = "unix:///var/run/docker.sock"
+  docker_only = true
+  disable_root_cgroup_stats = true
+  storage_duration = "5m"
+}
+
+prometheus.scrape "scraper" {
+  targets    = prometheus.exporter.cadvisor.local.targets
+  forward_to = [ prometheus.relabel.common_labels.receiver ]
+}
+
+

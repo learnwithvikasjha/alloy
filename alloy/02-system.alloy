@@ -1,0 +1,6 @@
+prometheus.exporter.unix "local" { }
+
+prometheus.scrape "host" {
+  targets    = prometheus.exporter.unix.local.targets
+  forward_to = [prometheus.relabel.common_labels.receiver]
+}

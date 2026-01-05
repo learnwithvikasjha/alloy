@@ -1,0 +1,15 @@
+// 10-receiver.alloy
+
+otelcol.receiver.otlp "default" {
+  // Listen for gRPC traces from your Python app (default port 4317)
+  grpc {
+    endpoint = "0.0.0.0:4317"
+  }
+
+
+  output {
+    // Forward everything to the same Grafana Cloud exporter 
+    // we defined in your 01-global.alloy
+    traces = [otelcol.exporter.otlp.grafana_cloud.input]
+  }
+}

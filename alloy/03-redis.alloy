@@ -1,0 +1,9 @@
+prometheus.exporter.redis "local" {
+  redis_addr = "localhost:6379"
+}
+
+prometheus.scrape "redis" {
+  targets    = prometheus.exporter.redis.local.targets
+  forward_to = [prometheus.relabel.common_labels.receiver]
+
+}

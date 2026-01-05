@@ -1,0 +1,12 @@
+// 01-global-loki.alloy
+
+loki.write "grafana_cloud_loki" {
+  endpoint {
+    url = "https://logs-prod-006.grafana.net/loki/api/v1/push"
+
+    basic_auth {
+      username = "<username>"
+      password = sys.env("GCLOUD_RW_API_KEY")
+    }
+  }
+}

@@ -1,0 +1,21 @@
+// Discovery block to set the address
+discovery.relabel "traefik_node" {
+  targets = [{
+    __address__ = "localhost:8080",
+  }]
+  
+  // Set a clean instance name
+  rule {
+    target_label = "instance"
+    replacement  = "traefik-proxy"
+  }
+}
+
+// Scraper block
+prometheus.scrape "traefik" {
+  targets    = discovery.relabel.traefik_node.output
+  // Pointing to your global standardization gate
+  forward_to = [prometheus.relabel.common_labels.receiver]
+  
+  job_name   = "traefik"
+}
