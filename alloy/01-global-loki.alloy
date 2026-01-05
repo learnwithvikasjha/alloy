@@ -5,7 +5,7 @@ loki.write "grafana_cloud_loki" {
     url = "https://logs-prod-006.grafana.net/loki/api/v1/push"
 
     basic_auth {
-      username = "<username>"
+      username = sys.env("LOKI_USERNAME")
       password = sys.env("GCLOUD_RW_API_KEY")
     }
   }

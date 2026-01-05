@@ -1,8 +1,8 @@
+// 01-global-remotecfg.alloy
+
 livedebugging {
   enabled = true
 }
-
-// 01-global-remotecfg.alloy
 
 remotecfg {
   url = "https://fleet-management-prod-008.grafana.net"
@@ -15,7 +15,7 @@ remotecfg {
   }
 
   basic_auth {
-    username = "<username>"
+    username = sys.env("REMOTE_CFG_USERNAME")
     password = sys.env("GCLOUD_RW_API_KEY")
   }
 }

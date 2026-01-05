@@ -1,7 +1,7 @@
 // 01-global-otel.alloy
 
 otelcol.auth.basic "grafana_cloud" {
-  username = "<username>"
+  username = sys.env("TEMPO_USERNAME")
   password = sys.env("GCLOUD_RW_API_KEY")
 }
 

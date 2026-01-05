@@ -4,8 +4,8 @@ pyroscope.write "production_backend" {
   endpoint {
     url = "https://profiles-prod-001.grafana.net"
     basic_auth {
-      username = "<username>"
-      password = env("GCLOUD_RW_API_KEY")
+      username = sys.env("PYROSCOPE_USERNAME")
+      password = sys.env("GCLOUD_RW_API_KEY")
     }
   }
 }

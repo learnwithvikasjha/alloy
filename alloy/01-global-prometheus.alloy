@@ -4,8 +4,7 @@ prometheus.remote_write "grafana_cloud" {
   endpoint {
     url = "https://prometheus-prod-13-prod-us-east-0.grafana.net/api/prom/push"
     basic_auth {
-      username = "<username>"
-      // Use the API Key you provided
+      username = sys.env("PROMETHEUS_USERNAME")
       password = sys.env("GCLOUD_RW_API_KEY")
     }
   }
