@@ -97,25 +97,6 @@ for some of the stuff to run, you may need to run alloy as the root user, you ca
   - `GCLOUD_RW_API_KEY` (Grafana Cloud API key)
   - `GITHUB_TOKEN` (for the GitHub exporter)
 
-## Quick start
-1) Export credentials:
-
-```bash
-export GCLOUD_RW_API_KEY=...
-export GITHUB_TOKEN=...
-```
-
-2) Run Alloy with the configs you want (from the repo root; keep the relevant
-`alloy/01-global-*.alloy` files first because they define shared exporters and
-relabel rules):
-
-```bash
-alloy run \
-  --config.file=alloy/01-global-remotecfg.alloy \
-  --config.file=alloy/01-global-prometheus.alloy \
-  --config.file=alloy/02-system.alloy \
-  --config.file=alloy/04-docker-metrics.alloy
-```
 
 ## Customization notes
 - Replace the Grafana Cloud endpoints, instance IDs, and usernames in the
